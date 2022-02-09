@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const { getUserInRoom, getUser, removeUser, addUser } = require('./users')
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const port = process.env.PORT || 5000
@@ -16,10 +17,14 @@ io.on("connection", (socket) => {
 
     //join harus sama dengan join scoket emit frontend
     socket.on('join', ({ name, room }, callback) => {
-        console.log(name, room);
 
-        const error = true
 
+        const { error, user } = addUser({ id: socket.id, name, room })
+        if (error) {
+            return callback(error)
+        }
+        socket.emit('message', { user: "admin", text: `${user.name}, Welcome to the room : ${user.room}` })
+        socket.join(user.room)
     })
 
     socket.on("disconnect", () => {

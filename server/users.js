@@ -11,8 +11,8 @@ const addUser = (id, name, room) => {
     users.push(user)
     return { user }//return last user input
 }
-const getUser = () => {
-
+const getUser = (id) => {
+    return users.find(user => user.id === id)
 }
 const removeUser = () => {
     const index = users.findIndex(user => user.id === id)
@@ -21,6 +21,7 @@ const removeUser = () => {
     }
 
 }
-const getUserInRoom = () => {
-
+const getUserInRoom = (room) => {
+    return users.filter(user => user.room === room)
 }
+module.exports = { getUserInRoom, getUser, removeUser, addUser }
