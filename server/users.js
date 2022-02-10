@@ -1,8 +1,7 @@
 const users = []
-const addUser = (id, name, room) => {
+const addUser = ({ id, name, room }) => {
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();
-
     const existingUser = users.find((user) => user.name === name && user.room === room)
     if (existingUser) {
         return { error: 'User already exists' }
@@ -12,7 +11,7 @@ const addUser = (id, name, room) => {
     return { user }//return last user input
 }
 const getUser = (id) => {
-    return users.find(user => user.id === id)
+    return users.find((user) => user.id === id)
 }
 const removeUser = () => {
     const index = users.findIndex(user => user.id === id)
